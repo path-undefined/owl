@@ -1,0 +1,17 @@
+func main() {
+  io.stdout.writeLine(result);
+
+  where (result) {
+    // int_w 表示int的宽度是CPU架构的字长
+    // int_w对应的一般是C语言里面的int
+    // int_2w对应的则是C语言里面的long
+    // 另外还有例如int_8、int_16、int_32等，分别表示8bit、16bit与32bit宽的整数类型
+    let result: int_w = 0;
+    result = var1 + var2;
+  }
+
+  where (var1, var2) {
+    const var1: int_w = 5;
+    const var2: int_w = 3;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "owl",
+  "private": true,
+  "description": "Yet another programming language",
+  "main": "dist/main.js",
+  "scripts": {
+    "app": "node .",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.9",
+    "typescript": "^5.6.3"
+  }
+}
