@@ -2,16 +2,67 @@ import { TokenMatcher } from "./types/token-matcher";
 
 export const tokenMatchers: TokenMatcher[] = [
   { type: "line_comment", match: "//" },
-  { type: "meaningless_character", match: [" ", "\t", "\r", "\n"] },
-  { type: "keyword_where", match: "where" },
-  // where有了，还要加for、in、if、elseif、else、where、while、switch等等
-  // ...
+  { type: "meaningless_character", match: /^[ \t\r\n]+/ },
 
-  // 这里思考两件事：
-  // 1. 为什么identifier一定要放在keywords的后面？
-  // 2. 为什么RegExp里面前面加了“^”，但是后面没有加“$”？
+  { type: "keyword_where", match: "where" },
+  { type: "keyword_for", match: "for" },
+  { type: "keyword_if", match: "if" },
+  { type: "keyword_elseif", match: "elseif" },
+  { type: "keyword_else", match: "else" },
+  { type: "keyword_switch", match: "switch" },
+  { type: "keyword_break", match: "break" },
+  { type: "keyword_continue", match: "continue" },
+  { type: "keyword_return", match: "return" },
+  { type: "keyword_func", match: "func" },
+  { type: "keyword_type", match: "type" },
+  { type: "keyword_struct", match: "struct" },
+  { type: "keyword_sequence", match: "sequence" },
+  { type: "keyword_const", match: "const" },
+  { type: "keyword_let", match: "let" },
+  { type: "keyword_yield", match: "yield" },
+  { type: "keyword_in", match: "in" },
+  { type: "keyword_islike", match: "islike" },
+
+  { type: "symbol_ampersand", match: "&"},
+  { type: "symbol_asterisk", match: "*"},
+  { type: "symbol_at", match: "@"},
+  { type: "symbol_bracket_left", match: "(" },
+  { type: "symbol_bracket_right", match: ")" },
+  { type: "symbol_caret", match: "^"},
+  { type: "symbol_caret_left", match: "<" },
+  { type: "symbol_caret_left_equal", match: "<=" },
+  { type: "symbol_caret_right", match: ">" },
+  { type: "symbol_caret_right_equal", match: ">=" },
+  { type: "symbol_colon", match: ":" },
+  { type: "symbol_comma", match: "," },
+  { type: "symbol_curly_bracket_left", match: "{" },
+  { type: "symbol_curly_bracket_right", match: "}" },
+  { type: "symbol_dollar", match: "$" },
+  { type: "symbol_dot", match: "."},
+  { type: "symbol_double_ampersand", match: "&&" },
+  { type: "symbol_double_caret_left", match: "<<"},
+  { type: "symbol_double_caret_right", match: ">>"},
+  { type: "symbol_double_equal", match: "==" },
+  { type: "symbol_double_pipe", match: "||" },
+  { type: "symbol_equal", match: "="},
+  { type: "symbol_exclamation", match: "!" },
+  { type: "symbol_exclamation_equal", match: "!=" },
+  { type: "symbol_minus", match: "-"},
+  { type: "symbol_percent", match: "%"},
+  { type: "symbol_pipe", match: "|"},
+  { type: "symbol_plus", match: "+"},
+  { type: "symbol_question_mark", match: "?" },
+  { type: "symbol_semicolon", match: ";" },
+  { type: "symbol_sharp", match: "#" },
+  { type: "symbol_slash", match: "/"},
+  { type: "symbol_square_bracket_left", match: "[" },
+  { type: "symbol_square_bracket_right", match: "]" },
+  { type: "symbol_tilde", match: "~"},
+
+  { type: "literal_string", match: /^"([^"\\]|\\.)*"/ },
+  { type: "literal_integer", match: /^-?\d+/ },
+  { type: "literal_float", match: /^-?\d+(\.\d+)?([eE][+-]?\d+)?/ },
+  { type: "literal_bool", match: /^true|^false/ },
+
   { type: "identifier", match: /^[A-Za-z0-9_]*/ },
-  
-  // 加上其余的内容
-  // ...
 ];

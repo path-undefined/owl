@@ -1,5 +1,6 @@
 import { parseArgs } from "node:util";
 import { readFileSync, writeFileSync } from "node:fs";
+import { SourceFile } from "./src/types/source-file";
 import { compile } from "./src/compiler";
 
 (function() {
@@ -21,15 +22,18 @@ import { compile } from "./src/compiler";
   const outputFile = parseResult.values["output"];
   const inputFiles = parseResult.positionals;
 
-  const inputFileContents = [];
+  const sourceFiles: SourceFile[] = [];
   for (const inputFile of inputFiles) {
     const inputFileContent = readFileSync(inputFile, { encoding: "utf8" });
-    inputFileContents.push(inputFileContent);
+    sourceFiles.push({
+      path: inputFile,
+      content: inputFileContent,
+    });
   }
 
   let outputFileContent: string = "";
   try {
-    outputFileContent = compile(inputFileContents);
+    outputFileContent = compile(sourceFiles);
   } catch(e) {
     if (!(e instanceof Error)) {
       console.error("An unknown error occurs. Abort!");
