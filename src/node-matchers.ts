@@ -1,4 +1,6 @@
-export const nodeDefinitions = [
+import { NodeMatcher } from "./types/node-matcher";
+
+export const nodeDefinitions: NodeMatcher[] = [
   {
     type: "literal_value",
     definition: {
