@@ -2,6 +2,85 @@ import { NodeMatcher } from "./types/node-matcher";
 
 export const nodeDefinitions: NodeMatcher[] = [
   {
+    type: "parentheses_expression",
+    definition: {
+      sequence: [
+        { token: "symbol_bracket_left" },
+        { node: "expression" },
+        { token: "symbol_bracket_right" },
+        { token: "symbol_minus"},
+      ],
+    },
+  },
+  {
+    type: "unary operator_expression",
+    definition: {
+      sequence: [
+        {
+          cases: [
+            { token: "symbol_exclamation" },
+            { token: "symbol_minus"},
+            { token: "symbol_plus"},
+            { token: "symbol_tilde"},
+          ],
+        },
+        {
+          cases: [
+            { node: "single_value" },
+            { node: "parentheses_expression" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    type: "dot_op_expression",
+    definition: {
+      sequence: [
+        {
+          cases: [
+            { node: "single_value" },
+          ],
+        },
+        {
+          cases: [
+            { token: "symbol_asterisk" },
+            { token: "symbol_slash"},
+            { token: "symbol_percent"},
+          ],
+        },
+        {
+          cases: [
+            { node: "single_value" },
+          ],
+        },
+      ],
+    }
+  },
+  {
+    type: "dash_op_expression",
+    definition: {
+      sequence: [
+        {
+          cases: [
+            { node: "single_value" },
+          ],
+        },
+        {
+          cases: [
+            { token: "symbol_plus" },
+            { token: "symbol_minus"},
+          ],
+        },
+        {
+          cases: [
+            { node: "single_value" },
+          ],
+        },
+      ],
+    }
+  },
+  {
     type: "literal_value",
     definition: {
       cases: [
