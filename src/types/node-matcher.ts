@@ -27,6 +27,7 @@ export interface SequenceNodeRule extends BaseNodeRule {
 
 export interface BaseNodeRule {
   name?: string;
-  optional?: boolean;
-  repeat?: boolean;
+  optional?: true;
+  repeat?: true;
+  replace?: true;
 }
