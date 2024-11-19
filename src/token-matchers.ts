@@ -18,7 +18,7 @@ export const tokenMatchers: TokenMatcher[] = [
   { type: "keyword_func", match: "func" },
   { type: "keyword_type", match: "type" },
   { type: "keyword_struct", match: "struct" },
-  { type: "keyword_sequence", match: "sequence" },
+  { type: "keyword_extends", match: "extends" },
   { type: "keyword_const", match: "const" },
   { type: "keyword_opt", match: "opt" },
   { type: "keyword_pub", match: "pub" },

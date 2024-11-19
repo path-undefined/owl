@@ -83,6 +83,23 @@ export const valueRelatedNodeDefinitions: NodeMatcher[] = [
 
 export const typeRelatedNodeDefinitions: NodeMatcher[] = [
   {
+    type: "type_parameter_list",
+    definition: {
+      sequence: [
+        { token: "symbol_caret_left" },
+        { token: "identifier", name: "type_parameter" },
+        {
+          sequence: [
+            { token: "keyword_extends" },
+            { node: "type_expression", name: "type_constraint" },
+          ],
+          optional: true,
+        },
+        { token: "symbol_caret_right" },
+      ],
+    },
+  },
+  {
     type: "type_argument_list",
     definition: {
       sequence: [
@@ -387,8 +404,55 @@ export const expressionRelatedNodeDefinitions: NodeMatcher[] = [
   },
 ];
 
-export const nodeDefinitions = [ 
+export const definitionRelatedNodeDefinitions: NodeMatcher[] = [
+  {
+    type: "type_definition",
+    definition: {
+      sequence: [
+        { token: "keyword_type" },
+        { token: "identifier", name: "alias_name" },
+        { node: "type_parameter_list", optional: true },
+        { token: "symbol_equal" },
+        { node: "type_expression", name: "actual_type" },
+      ],
+    },
+  },
+  {
+    type: "variable_definition",
+    definition: {
+      sequence:  [
+        { token: "keyword_let" },
+        { token: "identifier", name: "name" },
+        { token: "symbol_colon" },
+        { node: "type_expression", name: "type" },
+        {
+          sequence: [
+            { token: "symbol_equal" },
+            { node: "expression", name: "initial_value" },
+          ],
+          optional: true,
+        },
+      ],
+    },
+  },
+  {
+    type: "function_definition",
+    definition: {
+      sequence: [
+        { token: "keyword_func" },
+        { token: "identifier", name: "name" },
+        { node: "type_parameter_list", optional: true },
+        { node: "parameter_list" },
+        { token: "symbol_colon" },
+        { node: "type_expression", name: "return_type" },
+      ],
+    },
+  },
+];
+
+export const nodeDefinitions = [
   ...valueRelatedNodeDefinitions,
   ...typeRelatedNodeDefinitions,
   ...expressionRelatedNodeDefinitions,
+  ...definitionRelatedNodeDefinitions,
 ];
