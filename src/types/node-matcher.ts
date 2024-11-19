@@ -31,3 +31,19 @@ export interface BaseNodeRule {
   repeat?: true;
   replace?: true;
 }
+
+export function isSingleTokenNodeRule(d: NodeRule): d is SingleTokenNodeRule {
+  return !!(d as any).token;
+}
+
+export function isSingleNodeNodeRule(d: NodeRule): d is SingleNodeNodeRule {
+  return !!(d as any).node;
+}
+
+export function isSequenceNodeRule(d: NodeRule): d is SequenceNodeRule {
+  return !!(d as any).sequence;
+}
+
+export function isCasesNodeRule(d: NodeRule): d is CasesNodeRule {
+  return !!(d as any).cases;
+}

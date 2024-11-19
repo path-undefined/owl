@@ -386,3 +386,9 @@ export const expressionRelatedNodeDefinitions: NodeMatcher[] = [
     definition: { node: "logical_or_op_expression", replace: true },
   },
 ];
+
+export const nodeDefinitions = [ 
+  ...valueRelatedNodeDefinitions,
+  ...typeRelatedNodeDefinitions,
+  ...expressionRelatedNodeDefinitions,
+];

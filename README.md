@@ -1,14 +1,21 @@
 # owl
 
-要测试的话，执行下面的命令：
+## Development
+
+No matter what we do, we have to firstly build the compiler application:
 
 ```console
 $ npm run build
-$ npm run app -- -o result.out example.owl
 ```
 
-然后可以用下面的命令查看结果：
+To validate the syntax rules, run the following command:
 
 ```console
-$ cat result.out
+$ npm run validate-syntax
+```
+
+There is a set of test source files in the `example` folder. To test the compiler, do:
+
+```console
+$ npm run app -- -o example.out example/main.owl
 ```

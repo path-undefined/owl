@@ -5,7 +5,8 @@
   "main": "dist/main.js",
   "scripts": {
     "app": "node .",
-    "build": "tsc"
+    "build": "tsc",
+    "validate-syntax": "npm run build && node dist/src/syntax-rules-validator.js"
   },
   "devDependencies": {
     "@types/node": "^22.7.9",
