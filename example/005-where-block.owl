@@ -1,0 +1,36 @@
+import io from "io";
+
+func main(): void {
+  // We need result here, but result is not yet being calculated
+  // The calculation has been written down below
+  io.stdout.writeLine(result);
+
+  // This "where"-block is providing the value of result
+  where (result) {
+    var result: Int32 = 0;
+
+    // Again, we don't have var1 and var2
+    // They are being definted down below
+    // Double-pipe operator for a Nullable type provides its default value
+    result = var1 + (var2 || 7);
+  }
+
+  // This "where"-block is providing the value of var1 and var2
+  where (var1, var2) {
+    // Provide the value of var1
+    const var1: Int32 = 5;
+    // Provide the value of var2
+    // Here the type Nullable means this value can be null
+    // And null can only be assigned to a Nullable-typed value
+    const var2: Nullable<Int32> = null;
+  }
+
+  // The program here is equivalent to:
+  // const var1: Int32 = 5;
+  // const var2: Nullable<Int32> = null;
+  // var result: Int32 = 0;
+  // result = var1 + (var2 || 7);
+  // io.stdout.writeLine(result);
+
+  // Some algorithms are better to be implemented up-side-down
+}

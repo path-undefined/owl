@@ -1,0 +1,14 @@
+import io from "io";
+
+func main(): void {
+  // Keyword "const" means this value cannot be changed anymore
+  const a: Int32 = 3 + 5;
+  io.stdout.writeLine(a);
+
+  // Keyword "var" means the value can be changed afterwards
+  var b: Int32 = 3 - 5;
+  io.stdout.writeLine(b);
+
+  b = b + 5;
+  io.stdout.writeLine(b);
+}

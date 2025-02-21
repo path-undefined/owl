@@ -1,0 +1,6 @@
+import io from "io";
+
+func main(): void {
+  // This is a comment, and this won't be compiled
+  io.stdout.writeLine("hello world");
+}

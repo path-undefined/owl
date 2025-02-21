@@ -1,0 +1,9 @@
+import io from "io";
+
+func main(): void {
+  io.stdout.writeLine(3 + 5);
+  io.stdout.writeLine(3 - 5);
+  io.stdout.writeLine(3 * 5);
+  io.stdout.writeLine(3 / 5);
+  io.stdout.writeLine(3 % 5);
+}
