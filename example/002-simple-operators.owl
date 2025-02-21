@@ -1,9 +1,43 @@
-import io from "io";
+// We could use import { name } from "file";
+// However, if we want to import everything from a file, we could use the
+// following syntax. This creates a namespace in place for all the names inside
+// this file.
+import "events" as events;
+import "io" as io;
 
-func main(): void {
-  io.stdout.writeLine(3 + 5);
-  io.stdout.writeLine(3 - 5);
-  io.stdout.writeLine(3 * 5);
-  io.stdout.writeLine(3 / 5);
-  io.stdout.writeLine(3 % 5);
+actor Main {
+
+  // Note that we cannot directly write GlobalChannel::`ProgramStart here
+  // anymore, because the file "events" is completely imported as a namespace,
+  // thus the name inside this file can only be accessed using the namespace
+
+  // Also, if we don't need the event reference, we don't have to write it
+  listener events::GlobalChannel::ProgramStart {
+
+    // Here it is the same, we cannot use stdout directly anymore. The io as a
+    // namespace has to be used here
+    io::stdout.writeLine(3 + 5);
+    io::stdout.writeLine(3 - 5);
+    io::stdout.writeLine(3 * 5);
+    io::stdout.writeLine(3 / 5);
+    io::stdout.writeLine(3 % 5);
+    io::stdout.writeLine((3 + 5) * 7);
+    io::stdout.writeLine(3 << 1);
+    io::stdout.writeLine(3 >> 1);
+    io::stdout.writeLine(-3);
+    io::stdout.writeLine(+3);
+    io::stdout.writeLine(~3);
+    io::stdout.writeLine(3 & 5);
+    io::stdout.writeLine(3 ^ 5);
+    io::stdout.writeLine(3 | 5);
+    io::stdout.writeLine(3 < 5);
+    io::stdout.writeLine(3 > 5);
+    io::stdout.writeLine(3 <= 5);
+    io::stdout.writeLine(3 >= 5);
+    io::stdout.writeLine(3 == 5);
+    io::stdout.writeLine(3 != 5);
+    io::stdout.writeLine(true && false);
+    io::stdout.writeLine(true || false);
+    io::stdout.writeLine(!true);
+  }
 }

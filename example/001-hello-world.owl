@@ -1,6 +1,27 @@
-import io from "io";
+import { GlobalChannel } from "events";
+import { stdout } "io";
 
-func main(): void {
-  // This is a comment, and this won't be compiled
-  io.stdout.writeLine("hello world");
+// The whole language is constructed as a simplified actor model, where actors
+// are the basic building blocks of a program. Each actor can listen to a set
+// of events, change its own state, and send events to other actors
+
+// Each program should have a Main actor which will listen to the ProgramStart
+// event, which is sent to the GlobalChannel. This event is equivalent to the
+// call to the main function in other programming languages
+actor Main {
+
+  // Each event belongs to a certain channel. In this case, ProgramStart event
+  // belongs to the GlobalChannel
+
+  // This is the listener of the ProgramStart event. We listen to the
+  // ProgramStart event on the GlobalChannel, and create the event reference
+  // called ev
+  listener GlobalChannel::ProgramStart as ev {
+    // This is a comment, and this won't be compiled
+    // Since we have imported stdout, we can use it here
+    stdout.writeLine("hello world");
+
+    // The commandline arguments is the event payload
+    stdout.writeLine(ev.argv);
+  }
 }

@@ -1,47 +1,57 @@
-import io from "io";
+import "events" as events;
+import "io" as io;
 
-func main(): void {
-  const a: Int32 = 1;
-  // There are also Int8, Int16 and Int64
-  // For the unsigned types, there are UInt8, UInt16, UInt32 and UInt64
-  io.stdout.writeLine(a);
+actor Main {
+  listener events::GlobalChannel::ProgramStart {
+    const a: Int32 = 1;
+    // There are also Int8, Int16 and Int64
+    // For the unsigned types, there are UInt8, UInt16, UInt32 and UInt64
+    io::stdout.writeLine(a);
 
-  const b: Float32 = 3.14;
-  // There are also Float16, Float64 and Float128
-  io.stdout.writeLine(b);
+    const b: Float32 = 3.14;
+    // There are also Float16, Float64 and Float128
+    io::stdout.writeLine(b);
 
-  const c: Bool = true;
-  // Bool value can only be true or false
-  io.stdout.writeLine(c);
+    const c: Bool = true;
+    // Bool value can only be true or false
+    io::stdout.writeLine(c);
 
-  const d: String = "hello world";
-  // All the string characters should be encoded with UTF-8
-  io.stdout.writeLine(d);
+    const d: String = "hello world";
+    // All the string characters should be encoded with UTF-8
+    io::stdout.writeLine(d);
 
-  const e: Array<Int32> = Int32[ 1, 2, 3, 5, 8 ];
-  // The content in an array must be in same type
-  io.stdout.writeLine(e);
+    const e: Array<Int32> = Int32[ 1, 2, 3, 5, 8 ];
+    // The content in an array must be in same type
+    io::stdout.writeLine(e);
+    io::stdout.writeLine(e[0]);
+    io::stdout.writeLine(e[1]);
+    // io::stdout.writeLine(e[5]); <-- Wrong!! Index out of bound!
 
-  const f: SimpleStruct = SimpleStruct::new("John Doe", 32);
-  // Struct type is being defined down below
-  io.stdout.writeLine(f);
-  io.stdout.writeLine(f.name);
+    const f: SimpleStruct = SimpleStruct::new("John Doe", 32);
+    // Struct type is being defined down below
+    io::stdout.writeLine(f);
+    io::stdout.writeLine(f.name);
 
-  // io.stdout.writeLine(f.age); <-- Wrong!! it is private field
-  // f.getOlder(1); <-- Wrong!! Because f is const, a const struct instance cannot call instance method requires var receiver
-  // io.stdout.writeLine(f.buildGreetingSentence()); <-- Wrong!! Because buildGreetingSentence is private
+    // io::stdout.writeLine(f.age); <-- Wrong!! "age" is a private field!
+    // f.getOlder(1); <-- Wrong!! Because f is const, a const struct instance
+    //                    cannot call instance method requires var receiver!
+    // io::stdout.writeLine(f.buildGreetingSentence());
+    //                 ^-- Wrong!! Because buildGreetingSentence is private
 
-  f.sayHello();
+    f.sayHello();
 
-  var g: SimpleStruct = SimpleStruct{ name: "John Doe", age: 32 };
-  io.stdout.writeLine(g);
-  g.sayHello();
-  g.getOlder(1); // This is OK, because g is var, a var struct instance can call instance method requires var receiver
-  g.sayHello();
+    var g: SimpleStruct = SimpleStruct{ name: "John Doe", age: 32 };
+    io::stdout.writeLine(g);
+    g.sayHello();
+    // This is OK, because g is var, a var struct instance can call instance
+    // method requires var receiver
+    g.getOlder(1);
+    g.sayHello();
 
-  const h: SimpleLambda = (a, b) => a + b;
-  // Or alternatively also: ... = (a, b) => { return a + b; };
-  io.stdout.writeLine(h(1, 2));
+    const h: SimpleLambda = (a, b) => a + b;
+    // Or alternatively also: ... = (a, b) => { return a + b; };
+    io::stdout.writeLine(h(1, 2));
+  }
 }
 
 /////// STRUCTURE TYPE DEFINITION ///////
@@ -49,34 +59,43 @@ func main(): void {
 // This creates a structure type
 struct SimpleStruct {
   // Keyword "public" means this field can be accessed directly from outside
-  // Keyword "const" means once the field is being set, it cannot be changed anymore
+  // Keyword "const" means once the field is being set, it cannot be changed
+  // anymore
   public const name: String;
 
-  // Keyword "private" means this field can be only accessed inside instance method using receiver
-  // Keyword "var" means the field can be still changed after the struct has been created
+  // Keyword "private" means this field can be only accessed inside instance
+  // method using receiver
+  // Keyword "var" means the field can be still changed after the struct has
+  // been created
   private var age: Int32;
 }
 
-// Following methods are struct methods. They must be called using struct as a namespace:
+// Following methods are struct methods
+// They must be called using struct as a namespace
+
 func SimpleStruct::new(name: String, age: Int32) {
   return SimpleStruct { name: name, age: age };
 }
 
-// Following methods are instance methods. They must be called using an instance of struct as receiver:
+// Following methods are instance methods
+// They must be called using an instance of struct as receiver
 
 // Keyword "public" means this method can be called directly from outside
-// Keyword "const" for the receiver "this" means the method won't change any field in the struct:
+// Keyword "const" for the receiver "this" means the method won't change any
+// field in the struct
 public func SimpleStruct.sayHello(const this) {
-  io.stdout.writeLine(this.buildGreetingSentence());
+  io::stdout.writeLine(this.buildGreetingSentence());
   // this.age = 36; <-- Wrong!! The receiver is constant!!
 }
 
-// Keyword "private" means this method can be only called inside instance method using receiver
+// Keyword "private" means this method can be only called inside instance
+// method using receiver
 private func SimpleStruct.buildGreetingSentence(const this) {
   return this.name + " (" + self.age + ") says, \"hello world!\""
 }
 
-// Keyword "var" for the receiver "this" means the method is going to change the var field in the struct:
+// Keyword "var" for the receiver "this" means the method is going to change
+// the var field in the struct
 public func SimpleStruct.getOlder(var this, years: Int32) {
   this.age += years;
   // this.name = "Jane Joe" <-- Wrong!! The field is constant!!
@@ -84,5 +103,5 @@ public func SimpleStruct.getOlder(var this, years: Int32) {
 
 /////// FUNCTION TYPE DEFINITION ///////
 
-// A function declaration without implementation creates a function type.
+// A function declaration without implementation creates a function type
 func SimpleLambda(a: Int32, b: Int32): Int32;
